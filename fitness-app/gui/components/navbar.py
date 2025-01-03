@@ -13,7 +13,7 @@ def resource_path(relative_path):
 class Navbar(Frame):
 
     navbar_colour = "#D1D1D1"
-    relative_path = 'src\\assets\\icons\\'
+    relative_path = 'fitness-app\\assets\\icons\\'
 
     def __init__(self, parent, scenes):
         super().__init__(parent)
