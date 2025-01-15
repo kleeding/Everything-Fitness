@@ -74,17 +74,21 @@ class DashboardWidget(LabelFrame):
         for i in range(len(trends)):
             self.set_trend(self.trend_labels[i], trends[i])
 
+    trend_config = [["↘","green"], ["↘","red"], ["-","blue"], ["↗","red"], ["↗","green"]]
+
     def set_trend(self, widget, data):
-        if data == 2:
-            return widget.config(text="↗", font=('Segoe UI', 13), fg="green") 
-        elif data == 1:
-            return widget.config(text="↗", font=('Segoe UI', 13), fg="red") 
-        elif data == -1:
-            return widget.config(text="↘", font=('Segoe UI', 13), fg="red")
-        elif data == -2:
-            return widget.config(text="↘", font=('Segoe UI', 13), fg="green")
-        else:
-            return widget.config(text="-", font=('Segoe UI', 13), fg="blue")
+        index = int(data) + 2
+        widget.config(text=self.trend_config[index][0], font=('Segoe UI', 13), fg=self.trend_config[index][1])
+        # if data == 2:
+        #     return widget.config(text="↗", font=('Segoe UI', 13), fg="green") 
+        # elif data == 1:
+        #     return widget.config(text="↗", font=('Segoe UI', 13), fg="red") 
+        # elif data == -1:
+        #     return widget.config(text="↘", font=('Segoe UI', 13), fg="red")
+        # elif data == -2:
+        #     return widget.config(text="↘", font=('Segoe UI', 13), fg="green")
+        # else:
+        #     return widget.config(text="-", font=('Segoe UI', 13), fg="blue")
 
     def refresh(self):
         if len(self.output_labels) > 0:
