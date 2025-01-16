@@ -9,7 +9,7 @@ class ExerciseManager(DataManager):
         self.recent_lifts = ["-", "-", "-"]
         self.current_lifts = [0, 0, 0]
         self.pbs_lifts = [0, 0, 0]
-        
+
         self.weight_moved = [0, 0, 0]
         self.time_worked = [0, 0, 0]
 
@@ -18,8 +18,8 @@ class ExerciseManager(DataManager):
 
     def check_if_empty(self):
         if len(self.data) == 0:
-            tup = ('19700101', 'No lift records', 0, 0, 0, 0, 0, 0)
-            self.data.append(tup) # ADding a dummy record
+            dummy_record = ('19700101', 'No lift records', 0, 0, 0, 0, 0, 0)
+            self.data.append(dummy_record)
 
     def find_names(self):
         names = []
@@ -32,10 +32,10 @@ class ExerciseManager(DataManager):
             names.remove('No lift records')
 
         return names
-    
+
     def get_names(self):
         return self.find_names()
-    
+
     def sort_lift_data(self):
         lift_data = {}
 
@@ -47,10 +47,10 @@ class ExerciseManager(DataManager):
             lift_data[name] = lifts
 
         return lift_data
-    
+
     def get_lift_data(self):
         return self.lift_data
-    
+
     def calculate_info(self):
         self.lift_names = self.find_names()
         self.lift_data = self.sort_lift_data()
@@ -58,13 +58,15 @@ class ExerciseManager(DataManager):
         self.recent_lifts = self.lift_names[:3]
         self.current_lifts = self.get_recent_currents()
         self.pbs_lifts = self.get_recent_pbs()
-        
+
         self.weight_moved, self.time_worked = self.get_weight_moved_time_worked()
 
     def get_recent_currents(self):
         current = []
         for lift in self.recent_lifts:
-            max_lift = max(self.lift_data[lift][0][1],self.lift_data[lift][0][3],self.lift_data[lift][0][5])
+            max_lift = max(self.lift_data[lift][0][1],
+                           self.lift_data[lift][0][3],
+                           self.lift_data[lift][0][5])
             current.append(max_lift)
         return current
 
@@ -76,19 +78,18 @@ class ExerciseManager(DataManager):
             pbs.append(pb)
 
         return pbs
-    
+
     def lift_pb(self, lift):
         pb = 0
 
         lifts = self.lift_data[lift]
 
-        for lift in lifts:
-            c_max = max(lift[1], lift[3], lift[5])
-            if c_max > pb:
-                pb = c_max
+        for nums in lifts:
+            c_max = max(nums[1], nums[3], nums[5])
+            pb = max(pb, c_max)
 
         return pb
-    
+
     def get_weight_moved_time_worked(self):
         weight_moved = []
         time_worked = []
@@ -99,7 +100,7 @@ class ExerciseManager(DataManager):
             time_worked.append(reps * 4 // 6 / 10)
 
         return weight_moved[1:], time_worked[1:]
-    
+
     def cal_work(self, since):
         weight = 0
         reps = 0
@@ -113,20 +114,20 @@ class ExerciseManager(DataManager):
                 reps += (lift[3] + lift[5] + lift[7])
 
         return weight, reps
-    
+
     def data_to_tracking_series(self):
         self.lift_names = self.find_names()
         self.lift_data = self.sort_lift_data()
         series_data = {}
         date = self.dates[-1]
-        
+
         for name in self.lift_names:
             x = []
             y1, y2 = [], []
             for lift in self.lift_data[name]:
                 if date > lift[0]:
                     break
-                elif lift[0] > self.today:
+                if lift[0] > self.today:
                     pass
                 else:
                     x.append(self.day_in_date(2, lift[0]))
@@ -157,8 +158,9 @@ class ExerciseManager(DataManager):
             info.append('-')
             info.append(0)
             info.append(0)
-        
+
         info += self.weight_moved[:3]
         info += self.time_worked[:3]
 
         return info
+    

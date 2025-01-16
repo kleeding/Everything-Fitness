@@ -21,30 +21,29 @@ class BasicForm(Frame):
         self.recent = []
         self.lifts = []
 
-    def create_spin_entry(self, title, default_value, start, end, format, increment):
+    def create_spin_entry(self, title, default_value, start, end, _format, increment):
         title_label = Label(self.entry_frame, text=title)
         title_label.grid(padx=5, row=0, column=self.col_elements, sticky="s")
 
         default_data = DoubleVar(self)
         default_data.set(default_value[0])
 
-        data_entry = Spinbox(self.entry_frame, width=5, from_=start, to=end, format=format, increment=increment, textvariable=default_data)
+        data_entry = Spinbox(self.entry_frame, width=5, from_=start, to=end, format=_format, increment=increment, textvariable=default_data)
         data_entry.grid(padx=5, row=1, column=self.col_elements, sticky="n")
 
         if default_value[1]:
-            self.record_exists(data_entry, 1)       
+            self.record_exists(data_entry, 1)
         else:
             self.record_exists(data_entry, 0)
 
         self.entry_elements.append(data_entry)
 
-        if self.row_elements < 2:
-            self.row_elements = 2
+        self.row_elements = max(self.row_elements, 2)
         self.col_elements += 1
 
     def create_name_entry(self, title, options, custom, default):
-
         self.options = options
+
         if 'No lift records' in self.options:
             self.options.remove('No lift records')
 
@@ -58,9 +57,9 @@ class BasicForm(Frame):
         name_select.grid(padx=5, row=1, column=self.col_elements, sticky="new")
 
         self.name_elements.append(name_select)
-        
+
         self.row_elements = 3 if self.row_elements < 3 else self.row_elements
-        
+
         if custom:
             custome_frame = Frame(self.entry_frame)
             custome_frame.grid(padx=5, row=2, column=self.col_elements, sticky="new")
@@ -77,10 +76,10 @@ class BasicForm(Frame):
                     name_custom.delete(0, "end")
                     name_custom.config(state="disabled")
 
-            checkbutton = Checkbutton(custome_frame, 
+            checkbutton = Checkbutton(custome_frame,
                                       text="New Lift:",
-                                      variable=self.custom_name_var, 
-                                      onvalue=1, 
+                                      variable=self.custom_name_var,
+                                      onvalue=1,
                                       offvalue=0,
                                       command=enable_custom)
             checkbutton.pack(padx=(0,5), side="left")
@@ -119,7 +118,7 @@ class BasicForm(Frame):
         weight_reps_frame.grid(row=0, column=self.col_elements, rowspan=num+1, sticky="news")
         weight_reps_frame.grid_columnconfigure((0,2), weight=2)
         weight_reps_frame.grid_columnconfigure((1,3), weight=1)
-        
+
         weight_label = Label(weight_reps_frame, text="Weight")
         weight_label.grid(padx=5, pady=5, row=0, column=0)
         reps_label = Label(weight_reps_frame, text="Reps")
@@ -151,7 +150,7 @@ class BasicForm(Frame):
 
     def get_elements(self):
         return self.entry_elements
-    
+
     def get_element_inputs(self):
         inputs = []
 
@@ -162,7 +161,7 @@ class BasicForm(Frame):
         for element in self.entry_elements:  
             inputs.append(element.get())
         return inputs
-    
+
     def get_name(self):
         if len(self.name_elements) > 0:
             if self.custom_name_var.get() == 0:
@@ -170,21 +169,21 @@ class BasicForm(Frame):
             else:
                 return self.name_elements[1].get()
         return ""
-    
+
     def set_elements(self, record, name):
         if name == 'exercise':
             self.set_exercise_elements(record)
             return
-        
+
         if len(record) == 0:
             self.set_completed(False)
             return
 
         if len(record[0]) - 1 == len(self.entry_elements):
             for i in range(len(self.entry_elements)):
-                input = record[0][i+1]
-                self.set_spin_element(self.entry_elements[i], input)
-                self.record_exists(self.entry_elements[i], input)
+                _input = record[0][i + 1]
+                self.set_spin_element(self.entry_elements[i], _input)
+                self.record_exists(self.entry_elements[i], _input)
         else:
             self.set_completed(False)
 
@@ -192,8 +191,8 @@ class BasicForm(Frame):
         element.delete(0, "end")
         element.insert(0, value)
 
-    def record_exists(self, element, input):
-        if input != 0 and input != "":
+    def record_exists(self, element, _input):
+        if _input not in [0, ""]:
             element.config(bg="#a9f5a4")
         else:
             element.config(bg="#f2b6a7")
@@ -205,7 +204,7 @@ class BasicForm(Frame):
         else:
             for i in range(len(self.entry_elements)):
                 self.record_exists(self.entry_elements[i], 0)
-                
+
     def enable_submitted(self, enable):
         if enable:
             self.submitted_lifts.config(state="normal")
@@ -235,9 +234,9 @@ class BasicForm(Frame):
                 self.enable_submitted(False)
                 return
             return
-        
+
         self.recent = records
-                
+
         self.lifts = self.names_from_records(records)
         self.set_submitted_lifts(self.lifts)
         self.submitted_lifts.current(0)
@@ -296,3 +295,4 @@ class BasicForm(Frame):
                 self.set_completed(True)
             else:
                 self.set_completed(False)
+                

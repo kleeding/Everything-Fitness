@@ -24,7 +24,7 @@ class StepManager(DataManager):
             self.recent_goal = self.data[0][2]
             self.step_info = self.calculate_steps(self.dates, [self.today] * 4)
             self.step_info_prev = self.calculate_steps(self.previous_dates, self.dates)
-    
+
     def calculate_steps(self, start, until):
         steps = []
 
@@ -39,7 +39,7 @@ class StepManager(DataManager):
                     steps[-1] += step_count[1]
 
         return steps
-    
+
     def get_series_data(self):
         self.series_data = []
 
@@ -48,14 +48,14 @@ class StepManager(DataManager):
             for data in self.data:
                 if date >= data[0]:
                     break
-                elif data[0] > self.today:
+                if data[0] > self.today:
                     pass
                 else:
                     plot_data.append(data)
             self.series_data.append(plot_data)
 
         return self.series_data[1:]
-    
+
     def calculate_trends(self):
         trend = [0, 0, 0]
 
@@ -67,9 +67,10 @@ class StepManager(DataManager):
                 trend[i] = -1
 
         self.trend_info = trend
-    
+
     def get_info(self):
         return self.step_info
-    
+
     def get_trends(self):
         return self.trend_info
+    

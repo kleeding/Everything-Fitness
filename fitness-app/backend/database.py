@@ -21,13 +21,13 @@ class Database():
     def get_data(self):
         conn = sqlite3.connect('user.db')
 
-        self.exercise = self.load_exercise(conn)   
-        self.weight = self.load_weight(conn)   
-        self.step = self.load_step(conn)   
-        self.calorie = self.load_calorie(conn)    
+        self.exercise = self.load_exercise(conn)
+        self.weight = self.load_weight(conn)
+        self.step = self.load_step(conn)
+        self.calorie = self.load_calorie(conn)
 
         conn.close()
-    
+
     def load_exercise(self, conn):
         c = conn.cursor()
 
@@ -41,7 +41,7 @@ class Database():
                                 weight3 int,
                                 reps3 int
                                 )"""
-        
+
         c.execute(table_create_query)
 
         table_return_query = "SELECT * FROM exercise"
@@ -59,7 +59,7 @@ class Database():
                                 weight float, 
                                 goal float
                                 )"""
-        
+
         c.execute(table_create_query)
 
         table_return_query = "SELECT * FROM weight"
@@ -77,7 +77,7 @@ class Database():
                                 steps int, 
                                 goal int
                                 )"""
-        
+
         c.execute(table_create_query)
 
         table_return_query = "SELECT * FROM steps"
@@ -95,7 +95,7 @@ class Database():
                                 calories int, 
                                 goal int
                                 )"""
-        
+
         c.execute(table_create_query)
 
         table_return_query = "SELECT * FROM calories"
@@ -107,13 +107,13 @@ class Database():
 
     def get_exercise(self):
         return self.exercise
-    
+
     def get_weight(self):
         return self.weight
-    
+
     def get_step(self):
         return self.step
-    
+
     def get_calorie(self):
         return self.calorie
 
@@ -142,7 +142,4 @@ class Database():
         previous_dates.append(previous_month.strftime('%Y%m%d'))
         previous_dates.append(previous_year.strftime('%Y%m%d'))
 
-        return today, dates, previous_dates   
-    
-    def save_all(self):
-        pass
+        return today, dates, previous_dates

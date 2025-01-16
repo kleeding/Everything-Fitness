@@ -6,7 +6,7 @@ class ExerciseWidget(DashboardWidget):
                ["-", "-", "-"],
                ["-", "-", "-"],
                ["-", "-", "-"]]
-    
+
     labels2 = [["Week:", "-"],
                ["Month:", "-"],
                ["Year:", "-"]]

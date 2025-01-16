@@ -5,8 +5,8 @@ class WeightWidget(DashboardWidget):
     labels1 = [["Current", "-"],
                ["Goal", "-"],
                ["Estimated TTG", "-"]]
-    
-    labels2 = [["Day:", "-", "Week:", "-"], 
+
+    labels2 = [["Day:", "-", "Week:", "-"],
                ["Month:", "-", "Year:", "-"]]
 
     def __init__(self, parent, weight_manager):

@@ -19,13 +19,13 @@ class CalorieManager(DataManager):
         self.calculate_trends()
         self.tracking_graph_data = self.data_to_tracking_series()
         self.widget_graph_data = self.data_to_widget_series()
-    
+
     def calculate_info(self):
         self.recent_calories = self.data[0][1]
         self.recent_goal = self.data[0][2]
         self.calorie_info, self.calorie_counter = self.calculate_calories(self.dates, [self.today] * 4)
         self.calorie_info_prev, self.calorie_counter_prev = self.calculate_calories(self.previous_dates, self.dates)
-    
+
     def calculate_calories(self, start, until):
         calories = []
         counter = []
@@ -43,7 +43,7 @@ class CalorieManager(DataManager):
                     counter[-1] += 1
 
         return calories, counter
-    
+
     def get_series_data(self):
         series_data = []
 
@@ -63,7 +63,7 @@ class CalorieManager(DataManager):
     def calculate_trends(self):
         trend = [0, 0, 0]
 
-        daily_goal = self.data[0][2] # Need to make sure things like this don't fail when there are no datapoints
+        daily_goal = self.data[0][2]
 
         for i in range(3):
             if self.calorie_counter[i] > 0:
@@ -100,9 +100,10 @@ class CalorieManager(DataManager):
                     trend[i] = -2
 
         self.trend_info = trend
-    
+
     def get_info(self):
         return self.calorie_info
-    
+
     def get_trends(self):
         return self.trend_info    
+    

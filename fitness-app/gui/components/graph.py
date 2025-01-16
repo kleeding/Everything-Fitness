@@ -9,14 +9,15 @@ class Graph(Canvas):
         self.mode = mode
         self.enable_axis = enable_axis
         self.series = series
-        self.legend = ["Week", "Month", "Year"]        
-        self.size = size       
+        self.legend = ["Week", "Month", "Year"]
+        self.size = size
         self.series_canvas = []
         self.current_series = 0
+        self.series_buttons = None
 
         self.setup_graph(self.mode)
 
-    def setup_graph(self, mode):  
+    def setup_graph(self, mode):
         if mode == "line":
             self.marginx = 35
             self.marginy = 35
@@ -24,30 +25,34 @@ class Graph(Canvas):
             if self.pagename == "exercise":
                 self.size[1] += 50
                 self.legend = ["Year"]
-                self.xaxis = [["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]]                
+                self.xaxis = [["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]]
                 self.xsteps_p = [365]
                 self.xsteps_a = [12]
             else:
                 self.xsteps_p = [7, self.series[0], 365]
                 self.xsteps_a = [7, self.series[0], 12]
                     
-                self.xaxis = [["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], 
+                self.xaxis = [["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
                               list(i + 1 for i in range(self.series[0])),
-                              ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]]            
+                              ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]]
                 
                 self.series = self.series[1:]
 
                 self.create_buttons()
 
-            self.create_mainframe()        
+            self.create_mainframe()
             self.create_canvas()
-            self.set_buttons() if self.pagename != "exercise" else 0
+            if self.pagename != "exercise":
+                self.set_buttons()
         elif mode == "widget_line" or mode == "widget_bar":
             self.marginx = [5, 0]
             self.marginy = [25, 0]
-            self.create_mainframe()       
+            self.create_mainframe()
             self.create_canvas()
-            self.plot_widget_line() if mode == "widget_line" else self.plot_widget_bar()
+            if mode == "widget_line":
+                self.plot_widget_line()
+            else:
+                self.plot_widget_bar()
 
     def create_mainframe(self):
         self.graph_frame = LabelFrame(self, text="Graph", name="main_frame")
@@ -56,7 +61,7 @@ class Graph(Canvas):
         else:
             self.graph_frame.pack(fill="both", expand=True)
 
-    def create_buttons(self):     
+    def create_buttons(self):
         self.series_buttons = []
         button_frame = Frame(self.parent)
         button_frame.pack(pady=(10,0))
@@ -72,7 +77,6 @@ class Graph(Canvas):
         for i in range(len(self.series_buttons)):
             for element in self.series_buttons[i]:
                 element.config(command=lambda x = i: self.enable_series(x))
-        pass
 
     def create_canvas(self):
         if self.mode == "line" and self.pagename != "exercise":

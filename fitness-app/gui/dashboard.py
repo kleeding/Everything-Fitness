@@ -12,7 +12,7 @@ class Dashboard(Frame):
 
         self.grid_columnconfigure((0,1), uniform=True, weight=1)
         self.grid_rowconfigure((0,1), weight=1)
-                
+
         self.exercise_widget = ExerciseWidget(self, user.get_exercise())
         self.exercise_widget.grid(row=0, column=0, sticky="news", padx=(10,5), pady=(10,5))
 
@@ -23,7 +23,7 @@ class Dashboard(Frame):
         self.step_widget.grid(row=1, column=0, sticky="news", padx=(10,5), pady=(5,10))
 
         self.calorie_widget = CalorieWidget(self, user.get_calorie())
-        self.calorie_widget.grid(row=1, column=1, sticky="news", padx=(5,10), pady=(5,10)) 
+        self.calorie_widget.grid(row=1, column=1, sticky="news", padx=(5,10), pady=(5,10))
 
     def refresh_dashboard(self):
         self.exercise_widget.refresh()

@@ -21,13 +21,13 @@ class DashboardWidget(LabelFrame):
         info_frame = Frame(main_frame)
         info_frame.pack(fill="x", expand=True)
         return info_frame
-    
+
     def create_info(self, frame_label, info_labels, weightings, sticks):
-        frame = self.create_frame(frame_label) 
-        
+        frame = self.create_frame(frame_label)
+
         for i in range(len(weightings)):
             frame.columnconfigure(i, uniform=True, weight=weightings[i])
-        
+
         for i in range(len(info_labels)):
             for j in range(len(info_labels[i])):
                 text = info_labels[i][j]
@@ -37,9 +37,10 @@ class DashboardWidget(LabelFrame):
                     self.output_labels.append(label)
 
     def create_graph(self, mode, data, height):
-        if data[-1][0] == '19700101':
+        epoch_date = '19700101'
+        if data[-1][0] == epoch_date:
             data = []
-        
+
         frame = self.create_frame("")
         frame.pack(fill="both", expand=True)
 
@@ -65,24 +66,26 @@ class DashboardWidget(LabelFrame):
             trend_output = Label(item_frame, text="-")
             trend_output.pack(side="left", expand=True)
             self.trend_labels.append(trend_output)
-    
+
     def set_info_labels(self, outputs):
-        for i in range(len(outputs)):
-            self.output_labels[i].config(text=outputs[i])
+        for output in zip(self.output_labels, outputs):
+            output[0].config(text=output[1])
 
     def set_trend_labels(self, trends):
-        for i in range(len(trends)):
-            self.set_trend(self.trend_labels[i], trends[i])
+        for trend in zip(self.trend_labels, trends):
+            self.set_trend(trend[0], trend[1])
 
     trend_config = [["↘","green"], ["↘","red"], ["-","blue"], ["↗","red"], ["↗","green"]]
 
     def set_trend(self, widget, data):
         index = int(data) + 2
-        widget.config(text=self.trend_config[index][0], font=('Segoe UI', 13), fg=self.trend_config[index][1])
+        widget.config(text=self.trend_config[index][0],
+                      font=('Segoe UI', 13),
+                      fg=self.trend_config[index][1])
         # if data == 2:
-        #     return widget.config(text="↗", font=('Segoe UI', 13), fg="green") 
+        #     return widget.config(text="↗", font=('Segoe UI', 13), fg="green")
         # elif data == 1:
-        #     return widget.config(text="↗", font=('Segoe UI', 13), fg="red") 
+        #     return widget.config(text="↗", font=('Segoe UI', 13), fg="red")
         # elif data == -1:
         #     return widget.config(text="↘", font=('Segoe UI', 13), fg="red")
         # elif data == -2:

@@ -4,9 +4,9 @@ class CalorieWidget(DashboardWidget):
 
     labels1 = [["Day:", "-", "Week:", "-"], 
                ["Month:", "-", "Year:", "-"]]
-    
+
     def __init__(self, parent, calorie_manager):
-        super().__init__(parent, calorie_manager) 
+        super().__init__(parent, calorie_manager)
         self.config(text="CALORIES")
 
         self.create_info("", self.labels1, [1, 1, 1, 1], ['e', '', 'e', ''])

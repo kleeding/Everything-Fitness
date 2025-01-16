@@ -7,6 +7,8 @@ class DateEntry(Frame):
         self.grid_columnconfigure((0,1), uniform=True, weight=1)
         self.parent = parent
 
+        self.max_days = 31
+
         self.setup_labels()
         self.setup_spinboxs()
 
@@ -27,7 +29,7 @@ class DateEntry(Frame):
         day.set(self.selected[0])
         month.set(self.selected[1])
         year.set(self.selected[2])
-        
+
         self.calculate_days_in_month(self.selected[1], self.selected[2])
 
         self.day_entry = Spinbox(self, width=5, from_=1, to=self.max_days, format="%02.0f", textvariable=day, command=self.change_day)
@@ -42,8 +44,8 @@ class DateEntry(Frame):
         month = self.month_entry.get()
         year = self.year_entry.get()
         return [day, month, year]
-    
-    ## REWORK THIS, IS UGLY AF
+
+    ## REWORK THIS, IS UGLY
     def change_day(self):
         day = self.day_entry.get()
         if self.selected[0] == day and day == '01':

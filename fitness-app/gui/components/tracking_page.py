@@ -44,7 +44,7 @@ class TrackingPage(Frame):
         else:
             if len(records) == 1:
                 self.data_manager.remove_record(records[0], self.name)
-        
+
 
         self.update_form(date, "deleting")
         self.update_graph()

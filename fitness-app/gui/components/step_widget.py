@@ -2,9 +2,9 @@ from gui.components.dashboard_widget import DashboardWidget
 
 class StepWidget(DashboardWidget):
 
-    labels1 = [["Day:", "-", "Week:", "-"], 
+    labels1 = [["Day:", "-", "Week:", "-"],
                ["Month:", "-", "Year:", "-"]]
-    
+
     def __init__(self, parent, step_manager):
         super().__init__(parent, step_manager)
         self.config(text="STEPS")

@@ -7,7 +7,7 @@ class ExerciseTracking(TrackingPage):
 
     def __init__(self, parent, exercise_manager, name):
         super().__init__(parent, exercise_manager, name)
-        
+
         self.options = self.update_options()
         self.recent = self.data_manager.get_recent_records()
 
@@ -23,3 +23,4 @@ class ExerciseTracking(TrackingPage):
 
     def update_options(self):
         return sorted(self.data_manager.get_names())
+    

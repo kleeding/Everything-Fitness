@@ -15,7 +15,7 @@ class DataForm(Frame):
         self.data_entry_frame = Frame(self, relief="sunken", borderwidth = 1)
         self.data_entry_frame.pack(padx=5, pady=5, side="left", fill="both", expand=True)
         self.data_entry_frame.grid_columnconfigure((0,1), uniform=True, weight=1)
-        
+
         self.button_frame = Frame(self, relief="sunken", borderwidth = 1)
         self.button_frame.pack(padx=5, pady=5, side="right", fill="both")
 
@@ -29,7 +29,7 @@ class DataForm(Frame):
         date = self.date_entry.get_date()
         date_str = date[2] + date[1] + date[0]
         self.parent.load_record(date_str)
-        
+
     def save_record(self):
         date = self.date_entry.get_date()
         date_str = date[2] + date[1] + date[0]
