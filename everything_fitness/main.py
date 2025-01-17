@@ -70,7 +70,7 @@ if __name__ == "__main__":
     # Initialize the database
     user = Database()
 
-    # Create the main application window
+    # Create the root window
     root = Tk()
     root.title("Everything Fitness")
     root.geometry("800x800")

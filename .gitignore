@@ -1,3 +1,7 @@
+.venv
+.vscode
+.pytest_cache
+*.egg-info
 *.pyc
 *.pyo
 *.db
