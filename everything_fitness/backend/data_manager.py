@@ -186,7 +186,7 @@ class DataManager():
 
     def calculate_days_in_month(self, month, year):
         days = 1
-        if month == '12':
+        if month in ['12', 12]:
             days = (date(int(year) + 1, 1, 1) - date(int(year), int(month), 1)).days
         else:
             days = (date(int(year), int(month) + 1, 1) - date(int(year), int(month), 1)).days
