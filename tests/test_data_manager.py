@@ -4,56 +4,57 @@ today = '20250116'
 dates = ['20250115', '20250112', '20241231', '20241231']
 
 # normal - ascending order records
-data1 = [('20250101', 100.0, 85.0),
-        ('20250102', 98.2, 85.0),
-        ('20250103', 96.4, 85.0),
-        ('20250104', 94.1, 85.0),
-        ('20250105', 92.9, 85.0),
-        ('20250106', 90.1, 85.0),
-        ('20250107', 92.0, 85.0),
-        ('20250108', 96.7, 85.0),
-        ('20250109', 95.7, 85.0),
-        ('20250110', 92.7, 85.0),
-        ('20250111', 91.7, 85.0),
-        ('20250112', 89.7, 85.0),
-        ('20250113', 87.7, 85.0),
-        ('20250114', 85.7, 85.0),
-        ('20250115', 91.7, 85.0),
-        ('20250116', 91.2, 85.0)]
+data1 = [('20241215', 105.2, 85.0),
+         ('20250101', 100.0, 85.0),
+         ('20250102', 98.2, 85.0),
+         ('20250103', 96.4, 85.0),
+         ('20250104', 94.1, 85.0),
+         ('20250105', 92.9, 85.0),
+         ('20250106', 90.1, 85.0),
+         ('20250107', 92.0, 85.0),
+         ('20250108', 96.7, 85.0),
+         ('20250109', 95.7, 85.0),
+         ('20250110', 92.7, 85.0),
+         ('20250111', 91.7, 85.0),
+         ('20250112', 89.7, 85.0),
+         ('20250113', 87.7, 85.0),
+         ('20250114', 85.7, 85.0),
+         ('20250115', 91.7, 85.0),
+         ('20250116', 91.2, 85.0)]
 
 # missing entries - ascending order
 data2 = [('20250101', 100.0, 85.0),
-        ('20250102', 98.2, 85.0),
-        ('20250104', 94.1, 85.0),
-        ('20250106', 90.1, 85.0),
-        ('20250107', 92.0, 85.0),
-        ('20250109', 95.7, 85.0),
-        ('20250111', 91.7, 85.0),
-        ('20250112', 89.7, 85.0),
-        ('20250115', 91.7, 85.0)]
+         ('20250102', 98.2, 85.0),
+         ('20250104', 94.1, 85.0),
+         ('20250106', 90.1, 85.0),
+         ('20250107', 92.0, 85.0),
+         ('20250109', 95.7, 85.0),
+         ('20250111', 91.7, 85.0),
+         ('20250112', 89.7, 85.0),
+         ('20250115', 91.7, 85.0)]
 
 # missing entries - mixed order 
 data3 = [('20250107', 92.0, 85.0),
-        ('20250101', 100.0, 85.0),
-        ('20250102', 98.2, 85.0),
-        ('20250110', 92.7, 85.0),
-        ('20250103', 96.4, 85.0),
-        ('20250105', 92.9, 85.0),
-        ('20250115', 91.7, 85.0),
-        ('20250108', 96.7, 85.0),
-        ('20250114', 85.7, 85.0),
-        ('20250111', 91.7, 85.0)]
+         ('20250101', 100.0, 85.0),
+         ('20250102', 98.2, 85.0),
+         ('20250110', 92.7, 85.0),
+         ('20250103', 96.4, 85.0),
+         ('20250105', 92.9, 85.0),
+         ('20250115', 91.7, 85.0),
+         ('20250108', 96.7, 85.0),
+         ('20250114', 85.7, 85.0),
+         ('20250111', 91.7, 85.0)]
 
 # would be good to add tests for 'bad data' e.g., 
 # - incorrect date format
 # - wrong sized entries
 # - empty entries, etc
 
-def test_get_recent_record():
-    data_manager1 = DataManager('', data1, today, dates)
-    data_manager2 = DataManager('', data2, today, dates)
-    data_manager3 = DataManager('', data3, today, dates)
+data_manager1 = DataManager('', data1, today, dates)
+data_manager2 = DataManager('', data2, today, dates)
+data_manager3 = DataManager('', data3, today, dates)
 
+def test_get_recent_record():
     result1 = data_manager1.get_recent_record()
     result2 = data_manager2.get_recent_record()
     result3 = data_manager3.get_recent_record()
@@ -67,10 +68,6 @@ def test_get_recent_record():
     assert result3 == expected3
 
 def test_get_recent_records():
-    data_manager1 = DataManager('', data1, today, dates)
-    data_manager2 = DataManager('', data2, today, dates)
-    data_manager3 = DataManager('', data3, today, dates)
-
     result1 = data_manager1.get_recent_records()
     result2 = data_manager2.get_recent_records()
     result3 = data_manager3.get_recent_records()
@@ -84,10 +81,6 @@ def test_get_recent_records():
     assert result3 == expected3
 
 def test_get_records():
-    data_manager1 = DataManager('', data1, today, dates)
-    data_manager2 = DataManager('', data2, today, dates)
-    data_manager3 = DataManager('', data3, today, dates)
-
     test_dates = ['20241230', '20250101', '20250102', '20250106', '20250112', '20250114', '20250201']
 
     expected1 = [[],
@@ -166,7 +159,6 @@ def test_calculate_days_in_month():
         assert result == x[1]
 
 def test_get_series():
-    data_manager1 = DataManager('', data1, today, dates)
     result1 = data_manager1.get_series("widget_graph")
     expected1 = [('20250116', 91.2, 85.0),
                 ('20250115', 91.7, 85.0),
@@ -178,7 +170,6 @@ def test_get_series():
                 ('20250109', 95.7, 85.0),
                 ('20250108', 96.7, 85.0)]
 
-    data_manager2 = DataManager('', data2, today, dates)
     result2 = data_manager2.get_series("widget_graph")
     expected2 = [('20250115', 91.7, 85.0),
                  ('20250112', 89.7, 85.0),
@@ -190,7 +181,6 @@ def test_get_series():
                  ('20250102', 98.2, 85.0),
                  ('20250101', 100.0, 85.0)]
 
-    data_manager3 = DataManager('', data3, today, dates)
     result3 = data_manager3.get_series("widget_graph")
     expected3 = [('20250115', 91.7, 85.0),
                  ('20250114', 85.7, 85.0),
@@ -205,3 +195,4 @@ def test_get_series():
     assert result1 == expected1
     assert result2 == expected2
     assert result3 == expected3
+    
